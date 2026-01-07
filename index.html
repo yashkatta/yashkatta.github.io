@@ -61,7 +61,8 @@
 					</div>
 				</div>
 				<div class="hero-image-wrapper">
-					<img src="images/chip-hero-section.png" alt="Hero" class="hero-image">
+					<!-- <img src="images/chip-hero-section.png" alt="Hero" class="hero-image"> -->
+					<canvas class="hero-canvas"></canvas>
 				</div>
 			</div>
 		</section>
@@ -257,8 +258,19 @@
 	<!-- Linking Swiper script -->
 	<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
+	<!-- Linking Three.js scripts -->
+	<script type="importmap">
+		{
+			"imports":
+			{
+				"three": "https://cdn.jsdelivr.net/npm/three@0.182.0/build/three.module.min.js",
+				"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.182.0/examples/jsm/"
+			}
+		}
+	</script>
+
 	<!-- Linking custom script -->
-	<script src="script.js"></script>
+	<script type="module" src="script.js"></script>
 
 	<h3>Sanganak</h3>
 	<p>Build software for Vega processors,</p>
