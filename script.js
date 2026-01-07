@@ -61,36 +61,40 @@ const swiper = new Swiper('.slider-wrapper', {
 // 3D Rendering
 window.addEventListener("load", function () {
 	initThreejs();
-	console.log("all done.");
 });
 
 var renderer, scene, camera, constrols, cube;
+var canvasWidthRatio = window.getComputedStyle(document.documentElement).getPropertyValue("--site-max-width");
 
 async function initThreejs() {
-	canvas.width = 600;
-	canvas.height = 400;
+	canvas.width = 500; canvas.height = 309;
+	canvasWidthRatio = 500 / parseInt(canvasWidthRatio.slice(0, -2), 10);
 	// Select the existing canvas element
 	console.log(canvas.width, canvas.height);
 
-	renderer = new THREE.WebGLRenderer({ alpha: false, canvas: canvas, antialias: true });
+	renderer = new THREE.WebGLRenderer({ alpha: true, canvas: canvas, antialias: true });
 	renderer.setSize(canvas.width, canvas.height);
-	// renderer.setClearColor(0x000000, 0);
+	renderer.setClearColor(0x000000, 0);
 	renderer.setAnimationLoop(animate);
 
 	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 100);
+	camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 100);
 
 	const gltfLoader = new GLTFLoader().setPath('images/');
 
 	const geometry = new THREE.BoxGeometry(1, 1, 1);
-	const material = new THREE.MeshBasicMaterial({ color: 0x000080, wireframe: true });
+	const material = new THREE.MeshBasicMaterial({ color: 0xfffafa, wireframe: true });
 	cube = new THREE.Mesh(geometry, material);
 
 	scene.add(cube);
 
-	camera.position.z = 3;
+	camera.position.z = 2.3;
 
-	window.addEventListener('resize', onWindowResize)
+	window.addEventListener('resize', onWindowResize);
+
+	onWindowResize(); // Once to set hero-section
+
+	console.log("load all.");
 }
 
 function animate() {
@@ -101,5 +105,15 @@ function animate() {
 }
 
 function onWindowResize() {
-	;
+	if (canvas.width !== canvas.parentElement.clientWidth ||
+		canvas.height !== canvas.parentElement.clientHeight &&
+		canvas.parentElement.clientHeight < 450) {
+		let width = window.innerWidth * canvasWidthRatio;
+		width = width < 270 ? 270 : width;
+		canvas.width = width >= 270 && width < 500 ? width : 500;
+		canvas.height = 0.61803398875 * canvas.width;
+
+		renderer.setSize(canvas.width, canvas.height);
+	}
+	// console.log(canvas.clientWidth, canvas.clientHeight);
 }

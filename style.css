@@ -199,9 +199,15 @@ header .navbar {
 	background: var(--secondary-color);
 }
 
-.hero-section .hero-image-wrapper {
+.hero-section .hero-graphics-wrapper {
 	max-width: 500px;
-	margin-right: 30px;
+	margin-right: 2.3%;
+}
+
+.hero-section .hero-graphics-wrapper .hero-canvas {
+	border-width: 1px;
+	width: 100%;
+	height: auto;
 }
 
 /* About section styling */
@@ -571,9 +577,8 @@ header .navbar {
 		justify-content: center;
 	}
 
-	.hero-section .hero-image-wrapper {
+	.hero-section .hero-graphics-wrapper {
 		max-width: 270px;
-		margin-right: 0;
 	}
 
 	.about-section .section-content {
