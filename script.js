@@ -63,45 +63,84 @@ window.addEventListener("load", function () {
 	initThreejs();
 });
 
-var renderer, scene, camera, constrols, cube;
+var renderer, scene, camera, controls, cube, hero;
 var canvasWidthRatio = window.getComputedStyle(document.documentElement).getPropertyValue("--site-max-width");
+var whiteColor = window.getComputedStyle(document.documentElement).getPropertyValue("--white-color");
 
 async function initThreejs() {
 	canvas.width = 500; canvas.height = 309;
 	canvasWidthRatio = 500 / parseInt(canvasWidthRatio.slice(0, -2), 10);
-	// Select the existing canvas element
-	console.log(canvas.width, canvas.height);
+	whiteColor = parseInt(whiteColor.slice(1), 16);
 
+	// WebGLRenderer
 	renderer = new THREE.WebGLRenderer({ alpha: true, canvas: canvas, antialias: true });
+	renderer.outputColorSpace = THREE.SRGBColorSpace;
 	renderer.setSize(canvas.width, canvas.height);
-	renderer.setClearColor(0x000000, 0);
-	renderer.setAnimationLoop(animate);
+	renderer.setClearColor(whiteColor, 0);
+	// renderer.setAnimationLoop(animate);
 
+	// Set Scene & Camera
 	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 100);
+	camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000);
+	camera.position.set(20, 10, 20);
 
-	const gltfLoader = new GLTFLoader().setPath('images/');
+	// Set OrbitControls
+	controls = new OrbitControls(camera, renderer.domElement);
+	controls.target.set(0, 0, 0);
+	controls.minDistance = 23;
+	controls.maxDistance = 90;
+	// controls.autoRotate = true;
+	// controls.autoRotateSpeed = 8;
+	// controls.enableDamping = true;
+	controls.addEventListener('change', render);
+	controls.update();
 
-	const geometry = new THREE.BoxGeometry(1, 1, 1);
-	const material = new THREE.MeshBasicMaterial({ color: 0xfffafa, wireframe: true });
-	cube = new THREE.Mesh(geometry, material);
+	// Cube
+	// const geometry = new THREE.BoxGeometry(1, 1, 1);
+	// const material = new THREE.MeshBasicMaterial({ color: whiteColor, wireframe: true });
+	// cube = new THREE.Mesh(geometry, material);
+	// cube.scale.set(12,12,12);
+	// scene.add(cube);
 
-	scene.add(cube);
+	// glTF loader
+	const gltfLoader = new GLTFLoader().setPath('res/models/');
+	[hero] = await Promise.all([gltfLoader.loadAsync('LQFP-128.gltf'),]);
+	hero.scene.traverse(function (e) { if (e.isMaterial) { e.wireframe = true } });
+	hero.scene.rotation.x = THREE.MathUtils.degToRad(90);
+	// hero.scene.rotation.z = THREE.MathUtils.degToRad(45);
+	hero.scene.scale.set(800, 800, 800);
+	scene.add(hero.scene);
 
-	camera.position.z = 2.3;
+	// Lights
+	const ambientLight = new THREE.AmbientLight(whiteColor, 1.0);
+	scene.add(ambientLight);
 
+	const directionalLight = new THREE.DirectionalLight(whiteColor, 10.0);
+	scene.add(directionalLight);
+	scene.traverse(function (e) {
+		if (e.isDirectionalLight) {
+			e.position.set(40, 60, -40);
+			e.target.position.set(0, 0, 0);
+		}
+	});
+
+	// WindowResize
 	window.addEventListener('resize', onWindowResize);
+	onWindowResize();
 
-	onWindowResize(); // Once to set hero-section
+	render();
 
 	console.log("load all.");
 }
 
-function animate() {
-	cube.rotation.x += 0.01;
-	cube.rotation.y += 0.01;
-
+function render() {
 	renderer.render(scene, camera);
+}
+
+function animate() {
+	controls.update();
+
+	render();
 }
 
 function onWindowResize() {
@@ -111,9 +150,10 @@ function onWindowResize() {
 		let width = window.innerWidth * canvasWidthRatio;
 		width = width < 270 ? 270 : width;
 		canvas.width = width >= 270 && width < 500 ? width : 500;
-		canvas.height = 0.61803398875 * canvas.width;
+		canvas.height = 0.61803398875 * canvas.width; // Golden Ratio
 
 		renderer.setSize(canvas.width, canvas.height);
+		controls.update();
+		render();
 	}
-	// console.log(canvas.clientWidth, canvas.clientHeight);
 }
