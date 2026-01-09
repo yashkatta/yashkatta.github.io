@@ -59,28 +59,33 @@ const swiper = new Swiper('.slider-wrapper', {
 });
 
 // 3D Rendering
+//  Globals
+var renderer, camera, controls;
+var scene, cube, hero;
+
+const siteMaxWidthValue = window.getComputedStyle(document.documentElement).getPropertyValue("--site-max-width");
+const whiteColorValue = window.getComputedStyle(document.documentElement).getPropertyValue("--white-color");
+const darkColorValue = window.getComputedStyle(document.documentElement).getPropertyValue("--dark-color");
+
+const canvasWidthRatio = 500 / parseInt(siteMaxWidthValue.slice(0, -2), 10);
+const whiteColor = parseInt(whiteColorValue.slice(1), 16);
+const darkColor = parseInt(darkColorValue.slice(1), 16);
+
+//  Initializations
+canvas.width = 500; canvas.height = 309;
+
 window.addEventListener("load", function () {
 	initThreejs();
 });
 
-var renderer, scene, camera, controls, cube, hero;
-var canvasWidthRatio = window.getComputedStyle(document.documentElement).getPropertyValue("--site-max-width");
-var whiteColor = window.getComputedStyle(document.documentElement).getPropertyValue("--white-color");
-
 async function initThreejs() {
-	canvas.width = 500; canvas.height = 309;
-	canvasWidthRatio = 500 / parseInt(canvasWidthRatio.slice(0, -2), 10);
-	whiteColor = parseInt(whiteColor.slice(1), 16);
-
 	// WebGLRenderer
 	renderer = new THREE.WebGLRenderer({ alpha: true, canvas: canvas, antialias: true });
-	renderer.outputColorSpace = THREE.SRGBColorSpace;
 	renderer.setSize(canvas.width, canvas.height);
-	renderer.setClearColor(whiteColor, 0);
+	renderer.setClearColor(0, 0);
 	// renderer.setAnimationLoop(animate);
 
-	// Set Scene & Camera
-	scene = new THREE.Scene();
+	// Set Camera
 	camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000);
 	camera.position.set(20, 10, 20);
 
@@ -95,34 +100,28 @@ async function initThreejs() {
 	controls.addEventListener('change', render);
 	controls.update();
 
-	// Cube
-	// const geometry = new THREE.BoxGeometry(1, 1, 1);
-	// const material = new THREE.MeshBasicMaterial({ color: whiteColor, wireframe: true });
-	// cube = new THREE.Mesh(geometry, material);
-	// cube.scale.set(12,12,12);
-	// scene.add(cube);
+	// Scene
+	scene = new THREE.Scene();
 
 	// glTF loader
 	const gltfLoader = new GLTFLoader().setPath('res/models/');
 	[hero] = await Promise.all([gltfLoader.loadAsync('LQFP-128.gltf'),]);
-	hero.scene.traverse(function (e) { if (e.isMaterial) { e.wireframe = true } });
 	hero.scene.rotation.x = THREE.MathUtils.degToRad(90);
-	// hero.scene.rotation.z = THREE.MathUtils.degToRad(45);
 	hero.scene.scale.set(800, 800, 800);
+	hero.scene.traverse(function (o) { if (o.material) { o.material.metalness = 0.1; } });
 	scene.add(hero.scene);
 
 	// Lights
-	const ambientLight = new THREE.AmbientLight(whiteColor, 1.0);
+	const ambientLight = new THREE.AmbientLight(whiteColor, 1.5);
 	scene.add(ambientLight);
 
 	const directionalLight = new THREE.DirectionalLight(whiteColor, 10.0);
+	directionalLight.position.set(40, 60, -40);
+	directionalLight.target.position.set(0, 0, 0);
 	scene.add(directionalLight);
-	scene.traverse(function (e) {
-		if (e.isDirectionalLight) {
-			e.position.set(40, 60, -40);
-			e.target.position.set(0, 0, 0);
-		}
-	});
+
+	const hemiLight = new THREE.HemisphereLight(whiteColor, darkColor, 8.0);
+	scene.add(hemiLight);
 
 	// WindowResize
 	window.addEventListener('resize', onWindowResize);
@@ -139,7 +138,6 @@ function render() {
 
 function animate() {
 	controls.update();
-
 	render();
 }
 
