@@ -578,7 +578,7 @@ header .navbar {
 	}
 
 	.hero-section .hero-graphics-wrapper {
-		max-width: 270px;
+		max-width: 100%;
 	}
 
 	.about-section .section-content {

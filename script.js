@@ -79,6 +79,9 @@ window.addEventListener("load", function () {
 });
 
 async function initThreejs() {
+	// Initialize Canvas size
+	onWindowResize(1);
+
 	// WebGLRenderer
 	renderer = new THREE.WebGLRenderer({ alpha: true, canvas: canvas, antialias: true });
 	renderer.setSize(canvas.width, canvas.height);
@@ -125,7 +128,6 @@ async function initThreejs() {
 
 	// WindowResize
 	window.addEventListener('resize', onWindowResize);
-	onWindowResize();
 
 	render();
 
@@ -141,14 +143,22 @@ function animate() {
 	render();
 }
 
-function onWindowResize() {
+function onWindowResize(init) {
 	if (canvas.width !== canvas.parentElement.clientWidth ||
 		canvas.height !== canvas.parentElement.clientHeight &&
 		canvas.parentElement.clientHeight < 450) {
-		let width = window.innerWidth * canvasWidthRatio;
+
+		let ratio = canvasWidthRatio;
+		if(window.innerWidth < 900) { ratio = 0.9; }
+
+		let width = window.innerWidth * ratio;
+		width = width < 900 ? width : 900 * ratio;
 		width = width < 270 ? 270 : width;
 		canvas.width = width >= 270 && width < 500 ? width : 500;
 		canvas.height = 0.61803398875 * canvas.width; // Golden Ratio
+
+		if(init === 1)
+			return;
 
 		renderer.setSize(canvas.width, canvas.height);
 		controls.update();
