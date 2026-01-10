@@ -204,7 +204,12 @@ header .navbar {
 	margin-right: 2.3%;
 }
 
+.hero-section .hero-graphics-wrapper .hero-image {
+	display: block;
+}
+
 .hero-section .hero-graphics-wrapper .hero-canvas {
+	display: none;
 	border-width: 1px;
 	width: 100%;
 	height: auto;

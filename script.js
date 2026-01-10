@@ -7,7 +7,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 const navLinks = document.querySelectorAll(".nav-menu .nav-link")
 const menuOpenButton = document.querySelector("#menu-open-button")
 const menuCloseButton = document.querySelector("#menu-close-button")
-const canvas = document.querySelector(".hero-canvas");
+const img = document.querySelector(".hero-image")
+const canvas = document.querySelector(".hero-canvas")
 
 
 menuOpenButton.addEventListener("click", () => {
@@ -71,9 +72,20 @@ const canvasWidthRatio = 500 / parseInt(siteMaxWidthValue.slice(0, -2), 10);
 const whiteColor = parseInt(whiteColorValue.slice(1), 16);
 const darkColor = parseInt(darkColorValue.slice(1), 16);
 
-//  Initializations
 canvas.width = 500; canvas.height = 309;
 
+// Loading Manager
+const manager = new THREE.LoadingManager();
+manager.onLoad = function() {
+	img.style.display = "none";
+	canvas.style.display = "block";
+}
+manager.onProgress = function(item, loaded, total) {
+	console.log(`Loading item: ${item}. Loaded ${loaded} of ${total} files.`)
+}
+
+
+//  Initializations
 window.addEventListener("load", function () {
 	initThreejs();
 });
@@ -107,7 +119,7 @@ async function initThreejs() {
 	scene = new THREE.Scene();
 
 	// glTF loader
-	const gltfLoader = new GLTFLoader().setPath('res/models/');
+	const gltfLoader = new GLTFLoader(manager).setPath('res/models/');
 	[hero] = await Promise.all([gltfLoader.loadAsync('LQFP-128.gltf'),]);
 	hero.scene.rotation.x = THREE.MathUtils.degToRad(90);
 	hero.scene.scale.set(800, 800, 800);
