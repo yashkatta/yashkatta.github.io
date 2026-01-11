@@ -1,15 +1,38 @@
+import * as constants from './constants.js';
+
 // Three.js
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 
+//  Initializations
+window.addEventListener("load", function () {
+	assignLinks();
+	initThreejs();
+});
+
+// Assign Links
+function assignLinks() {
+	const linkedin = document.querySelectorAll(".social-link.l-linkedin")
+	const github = document.querySelectorAll(".social-link.l-github")
+	const fiverr = document.querySelectorAll(".social-link.l-fiverr")
+	const facebook = document.querySelectorAll(".social-link.l-facebook")
+	const instagram = document.querySelectorAll(".social-link.l-instagram")
+	const xTwitter = document.querySelectorAll(".social-link.l-x-twitter")
+
+	linkedin.forEach(i => {i.href = constants.LINKEDIN_LINK;});
+	github.forEach(i => {i.href = constants.GITHUB_LINK;});
+	fiverr.forEach(i => {i.href = constants.FIVERR_LINK;});
+	facebook.forEach(i => {i.href = constants.FACEBOOK_LINK;});
+	instagram.forEach(i => {i.href = constants.INSTAGRAM_LINK;});
+	xTwitter.forEach(i => {i.href = constants.XTWITTER_LINK;});
+}
+
+// Nav & Swiper
 const navLinks = document.querySelectorAll(".nav-menu .nav-link")
 const menuOpenButton = document.querySelector("#menu-open-button")
 const menuCloseButton = document.querySelector("#menu-close-button")
-const img = document.querySelector(".hero-image")
-const canvas = document.querySelector(".hero-canvas")
-
 
 menuOpenButton.addEventListener("click", () => {
 	// Toggle mobile menu visibility
@@ -64,6 +87,9 @@ const swiper = new Swiper('.slider-wrapper', {
 var renderer, camera, controls;
 var scene, cube, hero;
 
+const img = document.querySelector(".hero-image")
+const canvas = document.querySelector(".hero-canvas")
+
 const siteMaxWidthValue = window.getComputedStyle(document.documentElement).getPropertyValue("--site-max-width");
 const whiteColorValue = window.getComputedStyle(document.documentElement).getPropertyValue("--white-color");
 const darkColorValue = window.getComputedStyle(document.documentElement).getPropertyValue("--dark-color");
@@ -83,12 +109,6 @@ manager.onLoad = function() {
 manager.onProgress = function(item, loaded, total) {
 	console.log(`Loading item: ${item}. Loaded ${loaded} of ${total} files.`)
 }
-
-
-//  Initializations
-window.addEventListener("load", function () {
-	initThreejs();
-});
 
 async function initThreejs() {
 	// Initialize Canvas size
