@@ -449,6 +449,11 @@ header .navbar {
 	resize: vertical;
 }
 
+.contact-section .contact-form .contact-form-submit {
+	display: flex;
+	gap: 23px;
+}
+
 .contact-section .contact-form .submit-button {
 	padding: 10px 26px;
 	margin-top: 10px;
@@ -464,6 +469,31 @@ header .navbar {
 .contact-section .contact-form .submit-button:hover {
 	color: var(--primary-color);
 	background: transparent;
+}
+
+@keyframes fade-in-out {
+	0% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+.contact-section .contact-form .check {
+	padding: 10px 20px;
+	margin-top: 10px;
+	display: none;
+	align-content: center;
+	color: var(--primary-color);
+	border-radius: var(--border-radius-m);
+	border: 1px solid var(--primary-color);
+	animation: fade-in-out 1s linear 0s 8 forwards;
 }
 
 /* Footer section styling */

@@ -238,11 +238,19 @@
 					</li>
 				</ul>
 
-				<form action="#" class="contact-form">
-					<input type="text" placeholder="Your name" class="form-input" required>
-					<input type="email" placeholder="Your email" class="form-input" required>
-					<textarea placeholder="Your message" class="form-input" required></textarea>
-					<button class="submit-button">Submit</button>
+				<form action="#contact" class="contact-form">
+					<input id="name" type="text" placeholder="Your name" autocomplete="name" class="form-input"
+						required>
+					<input id="email" type="email" placeholder="Your email" autocomplete="email" class="form-input"
+						required>
+					<input id="subject" type="text" placeholder="Your Subject" autocomplete="on" class="form-input"
+						required>
+					<textarea id="message" placeholder="Your message" autocomplete="on" class="form-input"
+						required></textarea>
+					<div class="contact-form-submit">
+						<button class="submit-button">Submit</button>
+						<div class="button check">✓</div>
+					</div>
 				</form>
 			</div>
 		</section>

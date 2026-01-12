@@ -21,12 +21,12 @@ function assignLinks() {
 	const instagram = document.querySelectorAll(".social-link.l-instagram")
 	const xTwitter = document.querySelectorAll(".social-link.l-x-twitter")
 
-	linkedin.forEach(i => {i.href = constants.LINKEDIN_LINK;});
-	github.forEach(i => {i.href = constants.GITHUB_LINK;});
-	fiverr.forEach(i => {i.href = constants.FIVERR_LINK;});
-	facebook.forEach(i => {i.href = constants.FACEBOOK_LINK;});
-	instagram.forEach(i => {i.href = constants.INSTAGRAM_LINK;});
-	xTwitter.forEach(i => {i.href = constants.XTWITTER_LINK;});
+	linkedin.forEach(i => { i.href = constants.LINKEDIN_LINK; });
+	github.forEach(i => { i.href = constants.GITHUB_LINK; });
+	fiverr.forEach(i => { i.href = constants.FIVERR_LINK; });
+	facebook.forEach(i => { i.href = constants.FACEBOOK_LINK; });
+	instagram.forEach(i => { i.href = constants.INSTAGRAM_LINK; });
+	xTwitter.forEach(i => { i.href = constants.XTWITTER_LINK; });
 }
 
 // Nav & Swiper
@@ -82,6 +82,28 @@ const swiper = new Swiper('.slider-wrapper', {
 	}
 });
 
+// Contact form submit
+const form = document.querySelector(".contact-form")
+
+form.addEventListener('submit', () => {
+	const name = document.getElementById("name").value;
+	const email = document.getElementById("email").value;
+	const subject = document.getElementById("subject").value;
+	const message = document.getElementById("message").value;
+
+	const queryStr = `mailto:yash.katta1@gmail.com?subject=${subject}&body=${message}`;
+
+	if (window.confirm("Opening a default MailBox.")) {
+		window.location.href = queryStr;
+
+		const status = document.querySelector(".button.check")
+		status.style.display = "block";
+
+		setTimeout(function () { status.style.display = "none"; }, 8000);
+	}
+});
+
+
 // 3D Rendering
 //  Globals
 var renderer, camera, controls;
@@ -102,11 +124,11 @@ canvas.width = 500; canvas.height = 309;
 
 // Loading Manager
 const manager = new THREE.LoadingManager();
-manager.onLoad = function() {
+manager.onLoad = function () {
 	img.style.display = "none";
 	canvas.style.display = "block";
 }
-manager.onProgress = function(item, loaded, total) {
+manager.onProgress = function (item, loaded, total) {
 	console.log(`Loading item: ${item}. Loaded ${loaded} of ${total} files.`)
 }
 
@@ -181,7 +203,7 @@ function onWindowResize(init) {
 		canvas.parentElement.clientHeight < 450) {
 
 		let ratio = canvasWidthRatio;
-		if(window.innerWidth < 900) { ratio = 0.9; }
+		if (window.innerWidth < 900) { ratio = 0.9; }
 
 		let width = window.innerWidth * ratio;
 		width = width < 900 ? width : 900 * ratio;
@@ -189,7 +211,7 @@ function onWindowResize(init) {
 		canvas.width = width >= 270 && width < 500 ? width : 500;
 		canvas.height = 0.61803398875 * canvas.width; // Golden Ratio
 
-		if(init === 1)
+		if (init === 1)
 			return;
 
 		renderer.setSize(canvas.width, canvas.height);
