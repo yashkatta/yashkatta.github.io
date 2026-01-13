@@ -508,7 +508,7 @@ header .navbar {
 	justify-content: space-between;
 }
 
-.footer-section :where(.copyright-text, .social-link, .policy-link) {
+.footer-section :where(.copyright-text, .social-link, .policy-link, .version-link) {
 	color: var(--white-color);
 	transition: 0.2s ease;
 }
@@ -523,7 +523,8 @@ header .navbar {
 }
 
 .footer-section .social-link-list .social-link:hover,
-.footer-section .policy-text .policy-link:hover {
+.footer-section .policy-text .policy-link:hover,
+.footer-section .policy-text .version-link:hover {
 	color: var(--secondary-color);
 }
 
