@@ -6,6 +6,8 @@
 		<title>Sanganak</title>
 		<!-- Linking Font Awesome for icons -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+		<!-- Linking Swiper CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
 		<link rel="stylesheet" href="./style.css">
 	</head>
 	<body>
@@ -124,46 +126,54 @@
 			<section class="testimonials-section">
 				<h2 class="section-title">Testimonials</h2>
 				<div class="section-content">
-					<div class="slider-container">
+					<div class="slider-container swiper">
 						<div class="slider-wrapper">
-							<ul class="testimonials-list">
-								<li class="testimonial">
+							<ul class="testimonials-list swiper-wrapper">
+								<li class="testimonial swiper-slide">
 									<img src="user.jpg" alt="User" class="user-image">
 									<h3 class="name">User 1</h3>
 									<i class="feedback">Want to give a review.</i>
 								</li>
-								<li class="testimonial">
+								<li class="testimonial swiper-slide">
 									<img src="user.jpg" alt="User" class="user-image">
 									<h3 class="name">User 2</h3>
 									<i class="feedback">Want to give a review.</i>
 								</li>
-								<li class="testimonial">
+								<li class="testimonial swiper-slide">
 									<img src="user.jpg" alt="User" class="user-image">
 									<h3 class="name">User 3</h3>
 									<i class="feedback">Want to give a review.</i>
 								</li>
-								<li class="testimonial">
+								<li class="testimonial swiper-slide">
 									<img src="user.jpg" alt="User" class="user-image">
 									<h3 class="name">User 4</h3>
 									<i class="feedback">Want to give a review.</i>
 								</li>
-								<li class="testimonial">
+								<li class="testimonial swiper-slide">
 									<img src="user.jpg" alt="User" class="user-image">
 									<h3 class="name">User 5</h3>
 									<i class="feedback">Want to give a review.</i>
 								</li>
-								<li class="testimonial">
+								<li class="testimonial swiper-slide">
 									<img src="user.jpg" alt="User" class="user-image">
 									<h3 class="name">User 6</h3>
 									<i class="feedback">Want to give a review.</i>
 								</li>
 							</ul>
+
+							<div class="swiper-slide-button swiper-pagination"></div>
+							<div class="swiper-slide-button swiper-button-prev"></div>
+							<div class="swiper-slide-button swiper-button-next"></div>
 						</div>
 					</div>
 				</div>
 			</section>
 		</main>
 
+		<!-- Linking Swiper script -->
+		<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+		<!-- Linking custom script -->
 		<script src="./script.js"></script>
 
 		<h3>Sanganak</h3>
