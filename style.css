@@ -244,7 +244,7 @@ header .navbar {
 	color: var(--secondary-color);
 }
 
-/* product Section */
+/* Product Section */
 .product-section {
 	color: var(--white-color);
 	background: var(--dark-color);
@@ -283,6 +283,36 @@ header .navbar {
 
 .product-section .product-list .product-item .text {
 	font-size: var(--font-size-m);
+}
+
+/* Testimonials Section */
+.testimonials-section {
+	padding: 50px 0 100px;
+	background: var(--light-pink-color);
+}
+
+.testimonials-section .testimonial {
+	display: flex;
+	padding: 35px;
+	text-align: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.testimonials-section .testimonial .user-image {
+	width: 180px;
+	height: 180px;
+	object-fit: cover;
+	border-radius: var(--border-radius-circle);
+}
+
+.testimonials-section .testimonial .name {
+	margin-bottom: 16px;
+	font-size: var(--font-size-m);
+}
+
+.testimonials-section .testimonial .feedback {
+	line-height: 25px;
 }
 
 /* Responsive media query code for max width 1024px */
