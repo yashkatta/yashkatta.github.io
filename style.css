@@ -14,10 +14,14 @@
   /* Colors */
   --white-color: #fff;
   --dark-color: #252525;
-  --primary-color: #2e6f40;
+  /* --primary-color: #2e6f40;
   --secondary-color: #68ba7f;
   --light-pink-color: #fdfbd4;
-  --medium-gray-color: #ccc;
+  --medium-gray-color: #ccc; */
+  --primary-color: #713600;
+  --secondary-color: #C05800;
+  --light-pink-color: #fdfbd4;
+  --medium-gray-color: #38200d;
 
   /* Font size */
   --font-size-s: 0.9rem;
