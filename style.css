@@ -369,6 +369,51 @@ header .navbar {
 	transform: scale(1.3);
 }
 
+/* Contact us section styling */
+.contact-section {
+	padding: 50px 0 100px;
+	background: var(--light-pink-color);
+}
+
+.contact-section .section-content {
+	display: flex;
+	gap: 48px;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.contact-section .contact-info-list .contact-info {
+	display: flex;
+	gap: 20px;
+	margin: 20px 0;
+	align-items: center;
+}
+
+.contact-section .contact-info-list .contact-info i {
+	font-size: var(--font-size-m);
+}
+
+.contact-section .contact-form .form-input {
+	width: 100%;
+	height: 50px;
+	padding: 0 12px;
+	outline: none;
+	margin-bottom: 16px;
+	background: var(--white-color);
+	border-radius: var(--border-radius-s);
+	border: 1px solid var(--medium-gray-color);
+}
+
+.contact-form .contact-form .form-input:focus {
+	border-color: var(--secondary-color);
+}
+
+.contact-section .contact-form textarea {
+	height: 100px;
+	padding: 12px;
+	resize: vertical;
+}
+
 /* Responsive media query code for max width 1024px */
 @media screen and (max-width: 1024px) {
 	.product-section .product-list {
