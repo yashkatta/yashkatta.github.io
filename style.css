@@ -576,7 +576,7 @@ header .navbar {
 
 	.about-section .section-content {
 		gap: 70px;
-		flex-direction: column;
+		flex-direction: column-reverse;
 	}
 
 	.about-section .about-image-wrapper .about-image {
