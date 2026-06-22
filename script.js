@@ -49,3 +49,33 @@ const swiper = new Swiper('.slider-wrapper', {
     },
   }
 });
+
+// Three.js
+import * as THREE from 'three';
+
+const heroCanvas = document.querySelector(".hero-canvas");
+
+const heroScene = new THREE.Scene();
+const heroCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+const heroRenderer = new THREE.WebGLRenderer({
+    alpha: true,
+    canvas: heroCanvas,
+    antialias: true
+});
+heroRenderer.setAnimationLoop( animate );
+heroRenderer.outputColorSpace
+
+const geometry = new THREE.BoxGeometry(1,1,1);
+const material = new THREE.MeshBasicMaterial({ color: 0x008800, wireframe: true });
+const cube = new THREE.Mesh(geometry, material);
+heroScene.add(cube);
+
+heroCamera.position.z = 5;
+
+function animate( time ) {
+  cube.rotation.x = time / 2000;
+  cube.rotation.y = time / 1000;
+
+  heroRenderer.render(heroScene, heroCamera)
+}
