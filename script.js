@@ -50,32 +50,135 @@ const swiper = new Swiper('.slider-wrapper', {
   }
 });
 
+
 // Three.js
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
+const heroImage = document.querySelector(".hero-image");
 const heroCanvas = document.querySelector(".hero-canvas");
+heroCanvas.style.display = "none"
+const heroRenderer = new THREE.WebGLRenderer({ alpha: true, canvas: heroCanvas, antialias: true });
+heroRenderer.setSize(500, 293)
+
+const heroCamera = new THREE.PerspectiveCamera(45, 2, 0.1, 100);
+heroCamera.position.set(0, 10, 20);
+
+const heroControls = new OrbitControls( heroCamera, heroCanvas );
+heroControls.target.set(0, 5, 0);
+heroControls.update();
 
 const heroScene = new THREE.Scene();
-const heroCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-const heroRenderer = new THREE.WebGLRenderer({
-    alpha: true,
-    canvas: heroCanvas,
-    antialias: true
-});
-heroRenderer.setAnimationLoop( animate );
-heroRenderer.outputColorSpace
-
-const geometry = new THREE.BoxGeometry(1,1,1);
-const material = new THREE.MeshBasicMaterial({ color: 0x008800, wireframe: true });
-const cube = new THREE.Mesh(geometry, material);
-heroScene.add(cube);
-
-heroCamera.position.z = 5;
-
-function animate( time ) {
-  cube.rotation.x = time / 2000;
-  cube.rotation.y = time / 1000;
-
-  heroRenderer.render(heroScene, heroCamera)
+{
+  const light = new THREE.AmbientLight(0xFFFFFF, 0.5);
+  heroScene.add(light);
 }
+
+{
+  const skyColor = 0xB1E1FF; // light blue
+  const groundColor = 0xB97A20; // brownish orange
+  const intensity = 2;
+  const light = new THREE.HemisphereLight( skyColor, groundColor, intensity );
+  heroScene.add(light);
+}
+
+{
+  const color = 0xFFFFFF;
+  const intensity = 2.5;
+  const light = new THREE.DirectionalLight( color, intensity );
+  light.position.set( 3, -6, 1 );
+  heroScene.add(light);
+  heroScene.add(light.target);
+}
+
+function frameArea( sizeToFitOnScreen, boxSize, boxCenter, camera ) {
+
+  const halfSizeToFitOnScreen = sizeToFitOnScreen * 0.5;
+  const halfFovY = THREE.MathUtils.degToRad( camera.fov * .5 );
+  const distance = halfSizeToFitOnScreen / Math.tan( halfFovY );
+  // compute a unit vector that points in the direction the camera is now
+  // in the xz plane from the center of the box
+  const direction = ( new THREE.Vector3() )
+    .subVectors( camera.position, boxCenter )
+    .multiply( new THREE.Vector3( 1, 0, 1 ) )
+    .normalize();
+
+  // move the camera to a position distance units way from the center
+  // in whatever direction the camera was from the center already
+  camera.position.copy( direction.multiplyScalar( distance ).add( boxCenter ) );
+
+  // pick some near and far values for the frustum that
+  // will contain the box.
+  camera.near = boxSize / 100;
+  camera.far = boxSize * 100;
+
+  camera.updateProjectionMatrix();
+
+  // point the camera to look at the center of the box
+  camera.lookAt( boxCenter.x, boxCenter.y, boxCenter.z );
+}
+
+{
+
+  const gltfLoader = new GLTFLoader();
+  gltfLoader.load( 'res/hero-3d.gltf', ( gltf ) => {
+
+    const root = gltf.scene;
+    heroScene.add( root );
+
+    // compute the box that contains all the stuff
+    // from root and below
+    const box = new THREE.Box3().setFromObject( root );
+
+    const boxSize = box.getSize( new THREE.Vector3() ).length();
+    const boxCenter = box.getCenter( new THREE.Vector3() );
+
+    // set the camera to frame the box
+    frameArea( boxSize * 0.5, boxSize, boxCenter, heroCamera );
+
+    // update the Trackball controls to handle the new size
+    heroControls.maxDistance = boxSize * 10;
+    heroControls.target.copy( boxCenter );
+    heroControls.update();
+
+    heroImage .style.display = "none"
+    heroCanvas.style.display = "block"
+
+  } );
+
+}
+
+function resizeRendererToDisplaySize( renderer ) {
+
+  const canvas = renderer.domElement;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+  const needResize = canvas.width !== width || canvas.height !== height;
+  if ( needResize ) {
+
+    renderer.setSize( width, height, false );
+
+  }
+
+  return needResize;
+
+}
+
+function render() {
+  if ( resizeRendererToDisplaySize( heroRenderer ) ) {
+
+    const canvas = heroRenderer.domElement;
+    heroCamera.aspect = canvas.clientWidth / canvas.clientHeight;
+    heroCamera.updateProjectionMatrix();
+
+  }
+
+  heroRenderer.render( heroScene, heroCamera );
+
+  requestAnimationFrame( render );
+
+}
+
+requestAnimationFrame( render );
