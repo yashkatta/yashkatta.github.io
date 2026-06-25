@@ -88,7 +88,7 @@ const heroScene = new THREE.Scene();
   const color = 0xFFFFFF;
   const intensity = 2.5;
   const light = new THREE.DirectionalLight( color, intensity );
-  light.position.set( 3, -6, 1 );
+  light.position.set( 6, 3, 1 );
   heroScene.add(light);
   heroScene.add(light.target);
 }
@@ -126,6 +126,8 @@ function frameArea( sizeToFitOnScreen, boxSize, boxCenter, camera ) {
   gltfLoader.load( 'res/hero-3d.gltf', ( gltf ) => {
 
     const root = gltf.scene;
+    root.rotation.x = 90;
+    root.rotation.z = 45;
     heroScene.add( root );
 
     // compute the box that contains all the stuff
