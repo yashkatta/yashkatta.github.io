@@ -60,7 +60,7 @@ const heroImage = document.querySelector(".hero-image");
 const heroCanvas = document.querySelector(".hero-canvas");
 heroCanvas.style.display = "none"
 const heroRenderer = new THREE.WebGLRenderer({ alpha: true, canvas: heroCanvas, antialias: true });
-heroRenderer.setSize(500, 293)
+// heroRenderer.setSize(500, 293)
 
 const heroCamera = new THREE.PerspectiveCamera(45, 2, 0.1, 100);
 heroCamera.position.set(0, 10, 20);
@@ -146,7 +146,7 @@ function frameArea( sizeToFitOnScreen, boxSize, boxCenter, camera ) {
     heroControls.update();
 
     heroImage .style.display = "none"
-    heroCanvas.style.display = "block"
+    heroCanvas.style.display = "flex"
 
   } );
 

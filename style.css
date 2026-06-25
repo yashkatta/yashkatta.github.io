@@ -71,6 +71,7 @@ img {
 
 canvas {
 	width: 100%;
+	height: 100%;
 }
 
 .section-content {
@@ -202,6 +203,9 @@ header .navbar {
 
 .hero-section .hero-image-wrapper {
 	max-width: 500px;
+	max-height: 293px;
+	width: 100vw;
+	height: 100vh;
 	margin-right: 30px;
 }
 
