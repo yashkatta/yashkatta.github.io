@@ -188,3 +188,28 @@ heroCanvas.addEventListener('pointermove', function(event) {
 });
 
 requestAnimationFrame( render );
+
+// Send mail
+const contactForm = document.querySelector(".contact-form");
+
+contactForm.addEventListener('submit', function(event) {
+  // 1. Prevent the standard form submission/page reload
+  event.preventDefault();
+
+  // 2. Extract values from the form inputs
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const subject = encodeURIComponent(document.getElementById("subject").value);
+  const message = document.getElementById("message").value;
+
+  // 3. Define your recipient
+  const recipient = "yash.katta1@gmail.com"
+
+  // 4. Construct the body (EncodeURIComponent handles spaces and line breaks)
+  const bodyText = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+  const body = encodeURIComponent(bodyText);
+
+  // 5. Trigger the system's default mail client
+  window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+
+});
