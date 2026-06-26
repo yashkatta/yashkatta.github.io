@@ -148,6 +148,8 @@ function frameArea( sizeToFitOnScreen, boxSize, boxCenter, camera ) {
     heroImage .style.display = "none"
     heroCanvas.style.display = "flex"
 
+    requestAnimationFrame( render );
+
   } );
 
 }
@@ -179,8 +181,10 @@ function render() {
 
   heroRenderer.render( heroScene, heroCamera );
 
-  requestAnimationFrame( render );
-
 }
+
+heroCanvas.addEventListener('pointermove', function(event) {
+  requestAnimationFrame(render);
+});
 
 requestAnimationFrame( render );
