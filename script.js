@@ -213,3 +213,15 @@ contactForm.addEventListener('submit', function(event) {
   window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
 
 });
+
+// Order now Actions
+const orderNow = document.querySelector(".order-now");
+
+orderNow.addEventListener("click", () => {
+    document.getElementById("subject").value = "Order";
+    document.getElementById("message").value = "Order now...";
+
+    setTimeout(() => {
+      document.getElementById("name").focus();
+    }, 100);
+});
