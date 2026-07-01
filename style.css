@@ -379,7 +379,7 @@ header .navbar {
 	padding: 50px 0 100px;
 }
 
-.gallery-section .gallery-section {
+.gallery-section .gallery-list {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 32px;
