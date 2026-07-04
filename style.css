@@ -464,6 +464,7 @@ header .navbar {
 }
 
 .contact-section .contact-form .submit-button:hover {
+	color: var(--primary-color);
 	background: transparent;
 }
 
