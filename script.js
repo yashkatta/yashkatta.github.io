@@ -138,7 +138,7 @@ function frameArea( sizeToFitOnScreen, boxSize, boxCenter, camera ) {
     const boxCenter = box.getCenter( new THREE.Vector3() );
 
     // set the camera to frame the box
-    frameArea( boxSize * 0.5, boxSize, boxCenter, heroCamera );
+    frameArea( boxSize * 0.7, boxSize, boxCenter, heroCamera );
 
     // update the Trackball controls to handle the new size
     heroControls.maxDistance = boxSize * 10;
