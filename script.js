@@ -146,7 +146,7 @@ function frameArea( sizeToFitOnScreen, boxSize, boxCenter, camera ) {
     heroControls.update();
 
     heroImage .style.display = "none"
-    heroCanvas.style.display = "flex"
+    heroCanvas.style.display = "block"
 
     requestAnimationFrame( render );
 
@@ -182,6 +182,10 @@ function render() {
   heroRenderer.render( heroScene, heroCamera );
 
 }
+
+window.addEventListener('resize', function(event) {
+  requestAnimationFrame(render);
+});
 
 heroCanvas.addEventListener('pointermove', function(event) {
   requestAnimationFrame(render);
