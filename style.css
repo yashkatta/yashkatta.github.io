@@ -281,13 +281,13 @@ header .navbar {
 }
 
 /* Product Section */
-.product-section {
+.products-section {
 	color: var(--white-color);
 	background: var(--dark-color);
 	padding: 50px 0 100px;
 }
 
-.product-section .product-list {
+.products-section .products-list {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 110px;
@@ -295,7 +295,7 @@ header .navbar {
 	justify-content: space-between;
 }
 
-.product-section .product-list .product-item {
+.products-section .products-list .products-item {
 	display: flex;
 	align-items: center;
 	text-align: center;
@@ -304,20 +304,20 @@ header .navbar {
 	width: calc(100% / 3 - 110px);
 }
 
-.product-section .product-list .product-item .product-image {
+.products-section .products-list .products-item .products-image {
 	max-width: 83%;
 	aspect-ratio: 1;
 	margin-bottom: 15px;
 	object-fit: contain;
 }
 
-.product-section .product-list .product-item .name {
+.products-section .products-list .products-item .name {
 	margin: 12px 0;
 	font-size: var(--font-size-l);
 	font-weight: var(--font-weight-semibold);
 }
 
-.product-section .product-list .product-item .text {
+.products-section .products-list .products-item .text {
 	font-size: var(--font-size-m);
 }
 
@@ -511,11 +511,11 @@ header .navbar {
 
 /* Responsive media query code for max width 1024px */
 @media screen and (max-width: 1024px) {
-	.product-section .product-list {
+	.products-section .products-list {
 		gap: 60px;
 	}
 
-	.product-section .product-list .product-item {
+	.products-section .products-list .products-item {
 		width: calc(100% / 3 - 60px);
 	}
 }
@@ -622,15 +622,15 @@ header .navbar {
 		aspect-ratio: 1;
 	}
 
-	.product-section .product-list {
+	.products-section .products-list {
 		gap: 30px;
 	}
 
-	.product-section .product-list .product-item {
+	.products-section .products-list .products-item {
 		width: calc(100% / 2 - 30px);
 	}
 
-	.product-section .product-list .product-item .product-image {
+	.products-section .products-list .products-item .products-image {
 		max-width: 200px;
 	}
 
@@ -650,11 +650,11 @@ header .navbar {
 
 /* Responsive media query code for max width 640px */
 @media screen and (max-width: 640px) {
-	.product-section .product-list {
+	.products-section .products-list {
 		gap: 60px;
 	}
 
-	.product-section .product-list .product-item,
+	.products-section .products-list .products-item,
 	.gallery-section .gallery-list .gallery-item {
 		width: 100%;
 	}
